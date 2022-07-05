@@ -9,6 +9,7 @@ import numpy as np
 from scipy.stats import gaussian_kde
 import matplotlib.font_manager as fm
 from pitch_views.wicket_3d import plot_wicket_3d
+from utilities.plotting_utils import add_title_axis
 
 
 # Helper function to get gaussian kde for plotting - returns X,Y grid and Z density
@@ -26,7 +27,23 @@ def get_density(data):
     return X, Y, Z
 
 
-def pitch_map(xy, title='', subtitle_1='', subtitle_2=''):
+def pitch_densitymap(xy, title='', subtitle_1='', subtitle_2=''):
+
+    """ Plots a heatmap overlaid on wicket_3d front view, using a specified values array for square shading
+
+    ----------
+    xy: A 2d array
+        The x and y coordinates of the delivery pitching locations
+    title: A string
+        The plot title
+    subtitle_1: A string
+        The plot's 1st subtitle
+    subtitle_2: A string
+        The plot's 2nd subtitle
+
+    Returns
+    -------
+    matplotlib.axes.Axes"""
 
     # Define some styling
     pitch_colour = 'white'
@@ -83,43 +100,17 @@ def pitch_map(xy, title='', subtitle_1='', subtitle_2=''):
     # Plot the pitch points as a scatter overlaid
     # ax.scatter(xy[:, 0], xy[:, 1], c='blue', edgecolor='black', alpha=0.5, zorder=9)
 
-    # Add an inset axis for the plot title for nicer (to me at least) behaviour on the 3D axis
-    rect = [0, 0.85, 1, 0.15]
-    ax_title = fig.add_axes(rect, anchor='NW', facecolor=None)
-
-    # Remove axis markings
-    ax_title.set_axis_off()
 
     # Add titles and subtitles
-    # Main title
-    ax_title.text(0.18,
-                  0.42,
-                  title,
-                  horizontalalignment='left',
-                  fontproperties=fp,
-                  size=36,
-                  c=title_colour)
-
-    # 1st Subtitle
-    ax_title.text(0.18,
-                  0.18,
-                  subtitle_1,
-                  horizontalalignment='left',
-                  fontproperties=fp,
-                  size=16,
-                  c=title_colour)
-
-    # 2nd Subtitle
-    ax_title.text(0.18,
-                  -0.05,
-                  subtitle_2,
-                  horizontalalignment='left',
-                  fontproperties=fp,
-                  size=14,
-                  c=subtitle_colour)
+    add_title_axis(fig,
+                   title,
+                   subtitle_1,
+                   subtitle_2,
+                   fp=fp,
+                   title_colour=title_colour,
+                   subtitle_colour=subtitle_colour)
 
     # Generate a cricket pitch on the axis we created
-
     plot_wicket_3d(ax,
                    view='front',
                    pitch_colour=pitch_colour,

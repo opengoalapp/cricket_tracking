@@ -49,7 +49,7 @@ def plot_wicket_3d(ax,
         STUMP_LINEWIDTH = 3
         BEHIND_STUMPS_Y_LIMIT = -2
 
-        ax.view_init(elev=9, azim=90)
+        ax.view_init(elev=8, azim=90)
 
     elif view == 'back':
         PITCH_X_BOUND = -0.9
@@ -204,4 +204,4 @@ def plot_wicket_3d(ax,
 
         # Plot text labels as a regular text label
         ax.plot([-2, 2], [dist, dist], 0, c=marking_colour, alpha=0.2, ls='--', lw=1)
-        ax.text(2.1, dist, 0, '{0}m'.format(dist), color=outline_colour, fontproperties=fp, size=12)
+        ax.text(2.1, dist, 0, '{0}m'.format(dist), color=outline_colour, fontproperties=fp, size=14)
